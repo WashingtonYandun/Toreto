@@ -1,29 +1,38 @@
 import { Controls } from "./controls.js";
+import { Sensor } from "./sensor.js";
 
 class Car {
     constructor(x, y, width, height) {
+        // position and size
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
+        // physics
         this.speed = 0;
         this.aceleration = 0.2;
         this.maxSpeed = 4;
         this.friction = 0.045;
-        this.rotation = 0.02;
-
+        this.rotation = 0.05;
         this.angle = 0;
 
+        // controls and sensors
         this.controls = new Controls();
+        this.sensor = new Sensor(this);
+    }
+
+    update(roadBorders) {
+        this.#move();
+        this.sensor.update(roadBorders);
     }
 
     draw(ctx) {
+        ctx.fillStyle = "blue";
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(-this.angle);
         ctx.beginPath();
-        ctx.fillStyle = "blue";
         ctx.fillRect(
             -this.width / 2,
             -this.height / 2,
@@ -32,10 +41,8 @@ class Car {
         );
         ctx.closePath();
         ctx.restore();
-    }
 
-    update() {
-        this.#move();
+        this.sensor.draw(ctx);
     }
 
     #move() {
