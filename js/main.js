@@ -7,12 +7,12 @@ const ctx = canvas.getContext("2d");
 canvas.width = 400;
 canvas.height = window.innerHeight;
 
-const road = new Road(canvas.width / 2, canvas.width);
+const road = new Road(canvas.width / 2, canvas.width - 25);
 const car = new Car(road.getLaneCenter(2), 100, 30, 50);
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    car.update();
+    car.update(road.borders);
 
     ctx.save();
     ctx.translate(0, -car.y + canvas.height * 0.8);
