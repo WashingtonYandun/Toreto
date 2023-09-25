@@ -8,9 +8,10 @@ class Car {
         this.height = height;
 
         this.speed = 0;
-        this.aceleration = 0.1;
-        this.maxSpeed = 5;
-        this.friction = 0.02;
+        this.aceleration = 0.2;
+        this.maxSpeed = 4;
+        this.friction = 0.045;
+        this.rotation = 0.02;
 
         this.angle = 0;
 
@@ -68,10 +69,10 @@ class Car {
             const flip = this.speed > 0 ? 1 : -1;
             // rotation of the car
             if (this.controls.right) {
-                this.angle -= this.aceleration * flip;
+                this.angle -= this.rotation * flip;
             }
             if (this.controls.left) {
-                this.angle += this.aceleration * flip;
+                this.angle += this.rotation * flip;
             }
         }
 
