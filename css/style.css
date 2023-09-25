@@ -6,11 +6,11 @@
 .container {
     max-width: 100%;
     min-height: 100vh;
-    background-color: rgb(228, 228, 228);
+    background-color: #222222;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 #canvas {
-    background-color: red;
+    background-color: #000111;
 }
