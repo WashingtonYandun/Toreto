@@ -5,24 +5,24 @@ class Sensor {
         this.car = car;
         this.rayCount = 8;
         this.rayLength = 100;
-        this.raySpread = Math.PI;
+        this.raySpread = Math.PI * (13 / 18);
 
         this.rays = [];
         this.readings = [];
+
+        this.lastReverseRayTime = 0;
     }
 
     update(roadBorders) {
-        this.castRays(); // Renamed from #castRays
+        this.castRays();
         this.readings = [];
 
         for (const ray of this.rays) {
-            this.readings.push(this.getClosestIntersection(ray, roadBorders)); // Renamed from #getReading
+            this.readings.push(this.#getClosestIntersection(ray, roadBorders));
         }
-        console.log(this.readings);
     }
 
-    getClosestIntersection(ray, roadBorders) {
-        // Renamed from #getReading
+    #getClosestIntersection(ray, roadBorders) {
         let intersections = [];
 
         for (let i = 0; i < roadBorders.length; i++) {
@@ -42,14 +42,13 @@ class Sensor {
         } else {
             const offsets = intersections.map((e) => e.offset);
             const closest = Math.min(...offsets);
-            return intersections.find((e) => e.offset == closest);
+            return intersections.find((e) => e.offset === closest);
         }
     }
 
     castRays() {
-        // Renamed from #castRays
         this.rays = [];
-        for (let i = 0; i < this.rayCount; i++) {
+        for (let i = 0; i <= this.rayCount; i++) {
             const rayAngle =
                 lerp(
                     this.raySpread / 2,
@@ -73,16 +72,18 @@ class Sensor {
                 end = this.readings[i];
             }
 
+            // Draw the ray itself
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "#6a994e";
+            ctx.strokeStyle = "#6a994e"; // Green color
             ctx.moveTo(this.rays[i][0].x, this.rays[i][0].y);
             ctx.lineTo(end.x, end.y);
             ctx.stroke();
 
+            // Draw a secondary line from the car to the intersection point
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "#d90429";
+            ctx.strokeStyle = "#d90429"; // Red color
             ctx.moveTo(this.rays[i][1].x, this.rays[i][1].y);
             ctx.lineTo(end.x, end.y);
             ctx.stroke();
