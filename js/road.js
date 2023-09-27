@@ -2,7 +2,7 @@ import { lerp } from "./utils.js";
 
 class Road {
     constructor(x, width, laneCount = 5) {
-        const infinity = 100_000;
+        const infinity = 30_000;
 
         this.x = x;
         this.width = width;
@@ -13,6 +13,7 @@ class Road {
         this.top = -infinity;
         this.bottom = infinity;
 
+        // Define the road segment's borders as two lines (top and bottom)
         const topLeft = {
             x: this.left,
             y: this.top,
