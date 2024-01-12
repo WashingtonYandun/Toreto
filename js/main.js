@@ -8,8 +8,9 @@ canvas.width = 400;
 canvas.height = window.innerHeight;
 
 const road = new Road(canvas.width / 2, canvas.width - 25);
-
-const car = new Car(road.getLaneCenter(2), 100, 30, 50, "#1d3557");
+const traffic = [new Car(road.getLaneCenter(1), 100, 30, 50, "#1d3557")];
+const car = new Car(road.getLaneCenter(2), -100, 30, 50, "#1d3557");
+const model = [car, road];
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -18,8 +19,15 @@ function animate() {
     ctx.save();
     ctx.translate(0, -car.y + canvas.height * 0.6);
 
-    road.draw(ctx);
-    car.draw(ctx);
+    model.forEach((item) => {
+        item.update();
+        item.draw();
+    });
+
+    traffic.forEach((car) => {
+        car.update(road.borders);
+        car.draw(ctx);
+    });
 
     ctx.restore();
     requestAnimationFrame(animate);

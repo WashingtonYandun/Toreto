@@ -39,4 +39,10 @@ function getPolyIntersection(poly1, poly2) {
     return false;
 }
 
-export { lerp, getIntersection, getPolyIntersection };
+function getRandomColor() {
+    let color = Math.round(Math.random() * 1000000);
+    color = "#" + color.toString();
+    return color;
+}
+
+export { lerp, getIntersection, getPolyIntersection, getRandomColor };
